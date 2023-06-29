@@ -1,1 +1,13 @@
 # depth-estimation
+
+Setup and Dataset preparation: It first sets up the necessary dependencies and downloads the DIODE: A Dense Indoor and Outdoor Depth Dataset. This dataset is used for training the depth estimation model. The dataset is split into training and evaluation subsets. The dataset contains depth maps and corresponding RGB images. It only uses the indoor images to train the model.
+
+Data Pipeline: The pipeline takes a dataframe containing the path for the RGB images, as well as the depth and depth mask files. It reads and resizes the RGB images and the depth maps. The pipeline returns a batch of RGB images and their corresponding depth maps.
+
+Data visualization: It provides functions to visualize the depth maps and input RGB images. It also shows a 3D point cloud visualization using matplotlib, which is a scatter plot using the depth values and RGB values.
+
+Model Architecture: The architecture is based on U-Net, which is a popular architecture for semantic segmentation tasks. U-Net is a type of Convolutional Neural Network that was developed for biomedical image segmentation at the Computer Science Department of the University of Freiburg, Germany. The architecture consists of a contracting path (encoder) to capture context and a symmetric expanding path (decoder) that allows precise localization. In this case, the model has been modified to include additive skip-connections in the downscaling (encoder) blocks. It also has a custom DepthEstimationModel class that calculates three types of loss: Structural similarity index (SSIM), L1-loss, and Depth smoothness loss.
+
+Training the Model: The model is trained using these losses. Structural similarity index (SSIM) is a method for comparing similarities between two images. The SSIM value can vary between -1 and 1, where 1 means that the test image is identical to the reference image. L1-loss is simply the absolute difference between the predicted and true values. Depth smoothness loss is a custom loss designed to ensure smooth transitions in depth between adjacent pixels.
+
+Testing the Model: After training, the model can be used to predict depth maps from new RGB images.
